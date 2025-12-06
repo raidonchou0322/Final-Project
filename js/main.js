@@ -584,3 +584,70 @@ function setupHistoryToggle() {
         }
     });
 }
+/* ================================
+   GIFT CARD UPGRADED SYSTEM
+================================ */
+
+let selectedGiftAmount = 150;
+
+// Update selected value + active style + bonus system
+function selectGiftCardValue(amount) {
+    selectedGiftAmount = amount;
+    document.getElementById("gift-selected").innerText = `$${amount}`;
+
+    document.querySelectorAll(".gift-amount-btn").forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.innerText === `$${amount}`) {
+            btn.classList.add("active");
+        }
+    });
+
+    // Auto Bonus System: G
+    let bonus = 0;
+    if (amount >= 200) bonus = 20;
+    else if (amount >= 100) bonus = 10;
+
+    localStorage.setItem("gift_bonus", bonus);
+}
+
+// Unique gift card code generator
+function generateGiftCode() {
+    return "BB-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+}
+
+// E) Add Gift Card to cart
+function addGiftCardToCart() {
+    const email = document.getElementById("gift-email").value.trim();
+    if (!email) return alert("Enter recipient email first.");
+
+    const bonus = Number(localStorage.getItem("gift_bonus") || 0);
+
+    const cartItem = {
+        id: "gift-" + Date.now(),
+        name: `Digital Gift Card ($${selectedGiftAmount})`,
+        price: selectedGiftAmount,
+        bonus: bonus,
+        email: email,
+        quantity: 1,
+        img: "source/giftcard.jpg"
+    };
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    cart.push(cartItem);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Gift card added to cart!");
+    updateCartDisplay();
+}
+
+// D) Email Delivery Simulation
+function sendGiftCardEmail() {
+    const email = document.getElementById("gift-email").value.trim();
+    if (!email) return alert("Enter recipient email first.");
+
+    const code = generateGiftCode();
+    localStorage.setItem("gift_code", code);
+
+    alert(`Gift Card Sent!\nRecipient: ${email}\nCode: ${code}`);
+}
+
