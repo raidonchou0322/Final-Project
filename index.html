@@ -416,9 +416,7 @@
         </section>
 
         <style>
-            /* ============================================
-   PREMIUM CAROUSEL — FIXED & CENTERED
-============================================ */
+            /*------- CAROUSEL-------- */
 
             /* Centers the whole carousel track */
             #user-reviews-carousel {
@@ -863,7 +861,7 @@
                             👤
                         </div>
 
-                        <!-- ⭐ FIXED relative wrapper -->
+                        <!-- relative wrapper -->
                         <div class="relative w-fit">
 
                             <!-- Clickable name -->
@@ -876,7 +874,7 @@
                             <i data-lucide="pencil" id="edit-name-btn"
                                 class="w-4 h-4 text-cyan-400 opacity-0 ml-2 absolute top-1 right-[-20px] transition-opacity duration-200 cursor-pointer"></i>
 
-                            <!-- Editable input (ABSOLUTE but positioned inside REL wrapper) -->
+                            <!-- Editable input -->
                             <input id="profile-name-edit" type="text" class="hidden absolute left-0 top-0 bg-gray-900 border border-cyan-400/40 text-white px-3 py-1 rounded-lg shadow-lg
             w-[180px] transition-all duration-200 opacity-0 scale-95 focus:ring-2 focus:ring-cyan-400 z-50">
 
@@ -1020,9 +1018,7 @@
     </div>
 
 
-    <!-- ===========================
-     GIFT CARD
-=============================== -->
+    <!-------------  GIFT CARD ------------->
     <div id="gift-card-page" class="page hidden pt-20 pb-24">
 
         <div class="max-w-4xl mx-auto px-6">
@@ -1091,7 +1087,7 @@
         </div>
     </div>
 
-    <!-- TERMS OF SERVICE PAGE (FIXED — NOW A TOP-LEVEL PAGE) -->
+    <!-- TERMS OF SERVICE PAGE -->
     <div id="terms-page" class="page hidden pt-20 pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -1175,7 +1171,7 @@
         </div>
     </div>
 
-    <!-- ================= PRIVACY POLICY PAGE ================= -->
+    <!-- -------------- PRIVACY POLICY PAGE -------------->
     <div id="privacy-page" class="page hidden px-6 py-12 max-w-4xl mx-auto text-gray-300 leading-relaxed">
 
         <h1 class="text-4xl font-extrabold text-white mb-8">
@@ -1348,9 +1344,7 @@
 
     <script type="module">
 
-        /* ======================================================
-            FIREBASE 
-        ====================================================== */
+        /* ------------FIREBASE----------------- */
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
@@ -1366,9 +1360,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        /* ======================================================
-           AUTH LISTENER + PROFILE AUTO UPDATE
-        ====================================================== */
+        /* --------------------- AUTH LISTENER + PROFILE AUTO UPDATE----------------*/
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = "login.html";
@@ -1378,14 +1370,14 @@
             document.getElementById("profile-name").textContent = user.displayName || "User";
             document.getElementById("profile-email").textContent = user.email;
 
-            // 🔹 Save name for logout animation
+            //  Save name for logout animation
             localStorage.setItem("username", user.displayName || "User");
 
             const joined = new Date(user.metadata.creationTime);
             document.getElementById("profile-member-since").textContent =
                 `${joined.getDate()} ${joined.toLocaleString("en-US", { month: "short" })} ${joined.getFullYear()}`;
 
-            // ⭐ Enable inline username editing
+            // Enable inline username editing
             enableNameEdit(auth);
             loadUserReviews();
         });
@@ -1424,9 +1416,7 @@
             }, 3600);
         };
 
-        /* ======================================================
-           LOAD USER REVIEWS 
-        ====================================================== */
+        /* ------------------LOAD USER REVIEWS --------------------- */
 
         function loadUserReviews() {
             const track = document.getElementById("user-reviews-carousel");
@@ -1462,9 +1452,7 @@
         }
 
 
-        /* ======================================================
-            3D CAROUSEL ENGINE
-        ====================================================== */
+        /* -------3D CAROUSEL ENGINE -----------*/
 
         function initPremiumCarousel() {
             const track = document.getElementById("user-reviews-carousel");
@@ -1531,15 +1519,11 @@
         }
 
 
-        /* ======================================================
-           STARTUP
-        ====================================================== */
+        /* --------------- STARTUP ------------*/
         document.addEventListener("DOMContentLoaded", loadUserReviews);
 
 
-        /* ======================================================
-            CHECKOUT 
-        ====================================================== */
+        /* ------------ CHECKOUT --------------*/
         window.handleCheckout = function () {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             if (cart.length === 0) {
@@ -1559,9 +1543,7 @@
             }
         });
 
-        /* ======================================================
-            ENABLE INLINE USERNAME EDITING
-        ====================================================== */
+        /* ------------------ ENABLE INLINE USERNAME EDITING------------- */
         import { updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
         function enableNameEdit(auth) {

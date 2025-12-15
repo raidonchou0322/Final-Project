@@ -467,7 +467,7 @@ function loadProfileAnalytics() {
 
     }
 
-    // ⭐ Tier Unlock Event
+    // Tier Unlock Event
     const savedTier = localStorage.getItem("lastTier") || "New Member";
 
     if (tier !== savedTier) {
@@ -502,7 +502,7 @@ function loadProfileAnalytics() {
     // Last purchase date (latest first in saveOrder, so last element == oldest)
     anaLast.textContent = orders[0]?.date || "-";
 
-    // 🎯 REAL-TIME PROGRESS ANIMATION
+    // PROGRESS ANIMATION
     if (progressBar) {
         const target = calculateProgressToNextTier(orderCount);
         const current = parseFloat(progressBar.dataset.current || "0");
@@ -512,7 +512,7 @@ function loadProfileAnalytics() {
         const duration = 700;
         let startTime = null;
 
-        progressBar.style.transition = "none"; // we'll animate manually
+        progressBar.style.transition = "none";
 
         function step(ts) {
             if (!startTime) startTime = ts;
@@ -520,7 +520,7 @@ function loadProfileAnalytics() {
             const value = start + (end - start) * progress;
             progressBar.style.width = `${value.toFixed(1)}%`;
 
-            // Update progress bar color + glow based on tier
+
             if (progressBar) {
                 const color = tierColors[tier];
                 progressBar.style.backgroundColor = color.bar;
@@ -573,7 +573,7 @@ function initProfileSection() {
 
 
 /* =========================================================
-   PAGE CONTROLLER  ⚡ FIXED
+   PAGE CONTROLLER  
 ========================================================= */
 window.showPage = function (id) {
 
@@ -621,7 +621,7 @@ function setupHistoryToggle() {
         open = !open;
 
         if (open) {
-            /** 🔹 HIDE RECENT LIST (Shopify slide + fade) */
+            /* HIDE RECENT LIST */
             latestPanel.style.transition =
                 "opacity 260ms ease, transform 260ms ease";
             latestPanel.style.opacity = "0";
@@ -630,14 +630,14 @@ function setupHistoryToggle() {
             // Fully hide after fade completes
             setTimeout(() => latestPanel.classList.add("hidden"), 260);
 
-            /** 🔹 PREP FULL HISTORY ENTRY */
+            /* PREP FULL HISTORY ENTRY */
             fullPanel.classList.remove("hidden");
             fullPanel.style.opacity = "0";
             fullPanel.style.transform = "translateY(14px) scale(0.96)";
             fullPanel.style.transition =
                 "opacity 420ms cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 420ms cubic-bezier(0.18, 0.89, 0.32, 1.28)";
 
-            /** 🔹 PLAY EXPAND ANIMATION */
+            /* PLAY EXPAND ANIMATION */
             requestAnimationFrame(() => {
                 fullPanel.style.opacity = "1";
                 fullPanel.style.transform = "translateY(0) scale(1)";
@@ -646,7 +646,7 @@ function setupHistoryToggle() {
             btn.innerHTML =
                 `Hide Full History <i data-lucide="chevron-up" class="w-4 h-4"></i>`;
         } else {
-            /** 🔹 ANIMATE FULL PANEL OUT — Shopify bounce reverse */
+            /* ANIMATE FULL PANEL OUT  */
             fullPanel.style.transition =
                 "opacity 320ms cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 320ms cubic-bezier(0.18, 0.89, 0.32, 1.28)";
             fullPanel.style.opacity = "0";
@@ -655,7 +655,7 @@ function setupHistoryToggle() {
             // Fully hide after animation finishes
             setTimeout(() => fullPanel.classList.add("hidden"), 320);
 
-            /** 🔹 BRING BACK LATEST LIST — Shopify lift-in */
+            /*  BRING BACK LATEST LIST  */
             latestPanel.classList.remove("hidden");
             latestPanel.style.opacity = "0";
             latestPanel.style.transform = "translateY(-10px) scale(0.98)";
@@ -719,7 +719,7 @@ function showMessage(title, text, event) {
 
 
 /* =========================================================
-   PROFILE NAME UPDATE TOAST  ✔ FIXED + GLOBAL ACCESS
+   PROFILE NAME UPDATE TOAST 
 ========================================================= */
 window.showNameToast = function (msg) {
     const toast = document.getElementById("name-toast");
@@ -804,7 +804,7 @@ function animatedPurchaseGift(event) {
     card.style.transform = "scale(1) rotateY(0deg)";
     card.style.boxShadow = "";
 
-    // Smooth start delay (for better GPU sync)
+    // Start delay
     requestAnimationFrame(() => {
 
         card.style.transition = `
@@ -845,7 +845,7 @@ function selectGiftCardValue(amount) {
 }
 
 /* =========================================================
-   🎉 TIER UNLOCK POPUP + EFFECT ENGINE
+    TIER UNLOCK POPUP + EFFECT ENGINE
 ========================================================= */
 let lastTier = localStorage.getItem("lastTier") || "New Member";
 
@@ -861,18 +861,18 @@ function triggerTierUnlockPopup(tierName, color) {
 
     if (!popup || !box || !title) return;
 
-    // ⭐ Title + subtitle
+    // Title + subtitle
     title.style.color = color.badge;
     text.textContent = `Congratulations! You’ve reached ${tierName} Tier 🎉`;
 
-    // ⭐ Glow bar update
+    //  Glow bar update
     const glowBar = document.getElementById("tier-glow-bar");
     if (glowBar) {
         glowBar.style.background = color.badge;
         glowBar.style.boxShadow = `0 0 35px ${color.glow}`;
     }
 
-    // ⭐ Update perk list visually
+    //  Update perk list visually
     if (perkArea) {
         perkArea.innerHTML = ""; // reset
 
@@ -895,7 +895,7 @@ function triggerTierUnlockPopup(tierName, color) {
     confetti.innerHTML = "";
     particles.innerHTML = "";
 
-    // 🎉 Premium confetti burst
+    //  confetti burst
     for (let i = 0; i < 30; i++) {
         const piece = document.createElement("div");
         piece.className = "confetti-piece";
@@ -908,7 +908,7 @@ function triggerTierUnlockPopup(tierName, color) {
         confetti.appendChild(piece);
     }
 
-    // 🌌 Floating atmospheric particles
+    // Floating atmospheric particles
     for (let i = 0; i < 12; i++) {
         const dot = document.createElement("div");
         dot.className = "absolute rounded-full blur-md bg-cyan-300/50";
@@ -921,7 +921,7 @@ function triggerTierUnlockPopup(tierName, color) {
         particles.appendChild(dot);
     }
 
-    // 📌 Animate popup open
+    //  Animate popup open
     popup.classList.remove("pointer-events-none");
     popup.style.opacity = "1";
 
@@ -951,7 +951,7 @@ window.hideTierUnlockPopup = function () {
 
 
 /* =========================================================
-   🎉 TIER UNLOCK POPUP + EFFECT ENGINE
+    TIER UNLOCK POPUP
 ========================================================= */
 
 window.hideTierUnlockPopup = function () {
@@ -968,7 +968,7 @@ window.hideTierUnlockPopup = function () {
 };
 
 /* =========================================================
-   ⭐ Tier Benefit Modal Controller
+   Tier Benefit Modal Controller
 ========================================================= */
 window.openTierBenefitPanel = function () {
     const popup = document.getElementById("tier-benefit-popup");
