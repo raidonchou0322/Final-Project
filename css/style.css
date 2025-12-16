@@ -240,9 +240,7 @@
      transition: max-height 0.3s ease-out;
  }
 
- #mobile-menu.is-open {
-     /* max-height will be set dynamically in JS to allow transition */
- }
+
 
  .review-card {
      min-width: 300px;
